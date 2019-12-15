@@ -1,0 +1,21 @@
+name: RHEL
+version: 1.0
+resources:
+  demo-machine:
+    type: Cloud.Machine
+    properties:
+      image: ubuntu
+      flavor: small
+      networks:
+        - name: '${network-01.name}'
+          deviceIndex: 0
+        - name: '${network-02.name}'
+          deviceIndex: 1
+  network-01:
+    type: Cloud.vSphere.Network
+    properties:
+      name: network-01
+  network-02:
+    type: Cloud.vSphere.Network
+    properties:
+      name: network-02
