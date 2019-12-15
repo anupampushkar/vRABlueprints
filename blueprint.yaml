@@ -1,3 +1,5 @@
+name: CentOS
+version: 1.0
 resources:
   demo-machine:
     type: Cloud.Machine
