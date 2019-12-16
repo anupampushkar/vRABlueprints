@@ -1,4 +1,4 @@
-name: Windows Server 2019
+name: RHEL
 version: 1.0
 resources:
   demo-machine:
