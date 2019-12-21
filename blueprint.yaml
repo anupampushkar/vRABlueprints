@@ -1,5 +1,5 @@
-name: CentOS
-version: 1.0
+name: CentOS_Base
+version: 2.0
 resources:
   demo-machine:
     type: Cloud.Machine
