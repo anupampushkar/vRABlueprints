@@ -1,0 +1,47 @@
+name: "Ansible Nginx on Ubunt"
+version: v1
+inputs:
+  hostname:
+    type: string
+    title: Machine name
+    description: Name of the Virtual Machine
+resources:
+  Ansible:
+    type: Cloud.Ansible
+    properties:
+      inventoryFile: /etc/ansible/hosts
+      username: ansible
+      playbooks:
+        provision:
+          - /etc/ansible/playbooks/install-nginx.yml
+      osType: linux
+      groups:
+        - WebServers
+      maxConnectionRetries: 10
+      host: '${resource.Linux_VM.*}'
+      account: root
+      privateKeyFile: ~/.ssh/id_rsa
+  Linux_VM:
+    type: Cloud.Machine
+    properties:
+      image: ddeswart-Ubuntu
+      flavor: ddeswart-small
+      constraints:
+        - tag: 'platform:vsphere'
+      cloudConfig: |
+        hostname: ${input.hostname}
+ 
+        users:
+          - name: ansible
+            ssh-authorized-keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY2Qlj4RFL5G5rGNlmGEvAuJ3ToXfVkFCmnVlMw2WNuSBeE8lQpfxH3WqurEdtapUxYcQDlH/xpy/220+9EJajUa3KGp8fGvtZFZzTaPPkOIR0bvTZe9x4Udiuwch7jULKpEhZAl75gNs9dBb0zO+DkBj85YKs4Wcap28kSSDNZvgNgJhcJJi5GGq2DjaROUl4rIrdrUIeVEM6j3XTvOoZ7Py1wgATDD1IxdUCe4UB4RzUUP1bdpV1EMdGfg00KZuX/xOJ1U2s7mtcdhB0yZe/moMsPFwjisdxHFO435ra54MlfKsk8WUVtR+LLb/Dol8LEcCmC8Y5XSBqIwrj9eRX
+            sudo: ['ALL=(ALL) NOPASSWD:ALL']
+            groups: sudo
+            shell: /bin/bash
+      networks:
+        - network: '${resource.VM_network.id}'
+  VM_network:
+    type: Cloud.Network
+    properties:
+      name: VM network
+      networkType: existing
