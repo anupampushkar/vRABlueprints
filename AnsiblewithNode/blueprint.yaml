@@ -1,5 +1,5 @@
-name: "Ansible Nginx on Ubunt"
-version: v1
+name: Ansible
+version: 1
 inputs:
   hostname:
     type: string
