@@ -4,7 +4,7 @@ resources:
   demo-machine:
     type: Cloud.Machine
     properties:
-      image: ubuntu
+      image: CentOS8
       flavor: small
       networks:
         - name: '${network-01.name}'
