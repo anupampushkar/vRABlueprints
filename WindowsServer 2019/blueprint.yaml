@@ -4,7 +4,7 @@ resources:
   demo-machine:
     type: Cloud.Machine
     properties:
-      image: ubuntu
+      image: WindowsServer2016
       flavor: small
       networks:
         - name: '${network-01.name}'
