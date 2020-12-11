@@ -1,4 +1,4 @@
-formatVersion: 1
+formatVersion: 1.2
 inputs:
   Environment:
     type: string
