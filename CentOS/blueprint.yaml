@@ -1,21 +1,44 @@
-name: CentOS
-version: 1.1
+formatVersion: 1
+inputs:
+  Environment:
+    type: string
+    oneOf:
+      - title: Production
+        const: P
+      - title: Development
+        const: D
+      - title: SIT
+        const: S
+      - title: UAT
+        const: U
+    title: Environment
+    description: Select the Environment Type
+  OSimagetype:
+    type: string
+    oneOf:
+      - title: CentOS 8
+        const: CentOS8
+      - title: CentOS 7
+        const: CentOS7
+    title: Select Image/OS
+    description: Specify which operating system should be deployed on the machine.
+  cpucount:
+    type: integer
+    default: 1
+    minimum: 1
+    maximum: 8
+  Memory:
+    type: integer
+    default: 2
+    minimum: 1
+    maximum: 12
 resources:
-  demo-machine:
-    type: Cloud.Machine
+  Cloud_Machine_1:
+    type: Cloud.vSphere.Machine
     properties:
-      image: CentOS8
-      flavor: small
-      networks:
-        - name: '${network-01.name}'
-          deviceIndex: 0
-        - name: '${network-02.name}'
-          deviceIndex: 1
-  network-01:
-    type: Cloud.vSphere.Network
-    properties:
-      name: network-01
-  network-02:
-    type: Cloud.vSphere.Network
-    properties:
-      name: network-02
+      image: '${input.OSimagetype}'
+      cpuCount: '${input.cpucount}'
+      totalMemoryMB: '${input.Memory}'
+      osType: W
+      serverType: SRV
+      EnvType: '${input.Environment}'
